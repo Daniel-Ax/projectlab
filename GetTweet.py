@@ -1,6 +1,6 @@
 import sys
 import textwrap
-
+import tweepy
 #override tweepy.StreamListener to add logic to on_status
 class MyStreamListener(tweepy.StreamListener):
 
