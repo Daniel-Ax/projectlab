@@ -9,6 +9,7 @@ soup=BeautifulSoup(source,'lxml')
 csv_file=open('scrape.csv','w')
 csv_writer=csv.writer(csv_file)
 csv_writer.writerow(['headline','summary','video_link'])
+
 for article in soup.find_all('article'):
     headline=article.h2.a.text
     print(headline)
