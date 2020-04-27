@@ -7,13 +7,17 @@ soup=BeautifulSoup(source,'lxml')
 csv_file=open('hvg_scrape.csv','w')
 csv_writer=csv.writer(csv_file)
 
-fg=soup.find_all('div')
+fg=soup.find_all('article')
 for text in fg:
     text1=text.h1
-    print(text1)
+    text2=text.a.text
+    #text2=soup.get_text
+    #print(text1)
     if text1==None:
-        csv_file.write("Empty text")
+        print("Something went wrong")
     else:
-        csv_file.write(str(text1))
+        csv_file.write(str(text2))
+        print("File has been written")
 
 
+csv_file.close()
