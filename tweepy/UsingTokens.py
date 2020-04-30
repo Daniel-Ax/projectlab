@@ -5,6 +5,29 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import API_keys
 
+class TwitterClient():
+    def __init__(self,twitter_user=None):
+        self.auth=TwitterAuthenticator().authenticate_twitter_app()
+        self.twitter_clent=API(self.auth)
+        self.twitter_user=twitter_user
+
+    def get_user_timeline_tweets(self,num_tweets):
+        my_tweets=[]
+        for tweet in Cursor(self.twitter_clent.user_timeline,id=self.twitter_user).items(num_tweets):
+            my_tweets.append(tweet)
+        return my_tweets
+    def get_friend_list(self,num_friends):
+        friends=[]
+        for friend in Cursor(self.twitter_clent.friends).items(num_friends):
+            friends.append(friend)
+        return friends
+
+    def get_home_time_line(self,num_tweets):
+        home_timeline_tweets=[]
+        for tweet in Cursor(self.twitter_clent.home_timeline).items(num_tweets):
+            home_timeline_tweets.append(tweet)
+        return  home_timeline_tweets
+
 class TwitterAuthenticator():
     def authenticate_twitter_app(self):
         auth = OAuthHandler(API_keys.CONSUMER_KEY, API_keys.CONSUMER_SECRET)
@@ -17,11 +40,9 @@ class TwitterStreamer():
 
     def stream_tweets(self, tweet_filename, hashtag_list):
         #Ez kezeli a twitter azonosítást és a Twitter streamer API-t
-        listener = TwitterListener()
-        auth = OAuthHandler(API_keys.CONSUMER_KEY, API_keys.CONSUMER_SECRET)
-        auth.set_access_token(API_keys.ACCESS_TOKEN, API_keys.ACCESS_TOKEN_SECRET)
+        listener = TwitterListener(tweet_filename)
+        auth=self.twitter_authenticator.authenticate_twitter_app()
         stream = Stream(auth, listener)
-        stream=self.twitter_authenticator.authenticate_twitter_app()
         stream.filter(track=hashtag_list)
 
 class TwitterListener(StreamListener):
@@ -40,10 +61,16 @@ class TwitterListener(StreamListener):
             return True
 
     def on_error(self, status_code):
+        if status_code==420:
+            #Returning false on data method in case limit occurs.
+            return False
         print(status_code)
 
 if __name__=='__main__':
     hashtag_list=['donald trump','barack obama']
     tweet_filename="tweets.json"
-    twitter_streamer=TwitterStreamer()
-    twitter_streamer.stream_tweets(tweet_filename,hashtag_list)
+
+    twitter_client=TwitterClient('balaton sound')
+    print(twitter_client.get_user_timeline_tweets(1))
+    # twitter_streamer=TwitterStreamer()
+    # twitter_streamer.stream_tweets(tweet_filename,hashtag_list)
