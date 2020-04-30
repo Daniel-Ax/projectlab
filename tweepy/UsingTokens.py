@@ -18,13 +18,13 @@ class TwitterClient():
         return my_tweets
     def get_friend_list(self,num_friends):
         friends=[]
-        for friend in Cursor(self.twitter_clent.friends).items(num_friends):
+        for friend in Cursor(self.twitter_clent.friends,id=self.twitter_user).items(num_friends):
             friends.append(friend)
         return friends
 
     def get_home_time_line(self,num_tweets):
         home_timeline_tweets=[]
-        for tweet in Cursor(self.twitter_clent.home_timeline).items(num_tweets):
+        for tweet in Cursor(self.twitter_clent.home_timeline,id=self.twitter_user).items(num_tweets):
             home_timeline_tweets.append(tweet)
         return  home_timeline_tweets
 
