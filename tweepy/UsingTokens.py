@@ -95,8 +95,6 @@ if __name__=='__main__':
 
     df=tweet_analyzer.tweets_to_dataframe(tweets)
 
-    outFileName="C:\\xampp\\htdocs\\dashboard\\index.html"
-
     # print(df.head(10))
     # print(tweets[0].id)
     # print("Retweeted:",tweets[0].retweet_count,"times")
