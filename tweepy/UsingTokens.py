@@ -99,7 +99,7 @@ if __name__=='__main__':
     # print(tweets[0].id)
     # print("Retweeted:",tweets[0].retweet_count,"times")
     # print(df.head(10))
-    json=df.to_html("index")
+    html=df.to_html("index")
     print(df)
     # hashtag_list=['donald trump','barack obama']
     # tweet_filename="tweets.json"
