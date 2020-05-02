@@ -4,12 +4,19 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import API_keys
+import numpy as np
+import pandas as pd
+
 
 class TwitterClient():
     def __init__(self,twitter_user=None):
         self.auth=TwitterAuthenticator().authenticate_twitter_app()
         self.twitter_clent=API(self.auth)
+
         self.twitter_user=twitter_user
+
+    def get_twitter_client_api(self):
+        return self.twitter_clent
 
     def get_user_timeline_tweets(self,num_tweets):
         my_tweets=[]
@@ -66,11 +73,37 @@ class TwitterListener(StreamListener):
             return False
         print(status_code)
 
-if __name__=='__main__':
-    hashtag_list=['donald trump','barack obama']
-    tweet_filename="tweets.json"
+class TweetAnalyzer():
+    #Analyze tweets
+    def tweets_to_dataframe(self,tweets):
+        df=pd.DataFrame(data=[tweet.text for tweet in tweets],columns=['Tweets'])
 
-    twitter_client=TwitterClient('balaton sound')
-    print(twitter_client.get_user_timeline_tweets(1))
+        df['len'] = np.array([len(tweet.text) for tweet in tweets])
+        df['id'] = np.array([tweet.id for tweet in tweets])
+        df['date'] = np.array([tweet.created_at for tweet in tweets])
+        df['likes'] = np.array([tweet.favorite_count for tweet in tweets])
+        df['retweet'] = np.array([tweet.retweet_count for tweet in tweets])
+        df['Device'] = np.array([tweet.source for tweet in tweets])
+        return df
+
+if __name__=='__main__':
+    twitter_client=TwitterClient()
+    tweet_analyzer=TweetAnalyzer()
+
+    api=twitter_client.get_twitter_client_api()
+    tweets=api.user_timeline(screen_name="realDonaldTrump",count=20)
+    #print(dir(tweets[0]))
+
+    df=tweet_analyzer.tweets_to_dataframe(tweets)
+
+    print(df.head(10))
+    print(tweets[0].id)
+    print("Retweeted:",tweets[0].retweet_count,"times")
+    print(df.head(10))
+    # hashtag_list=['donald trump','barack obama']
+    # tweet_filename="tweets.json"
+    #
+    # twitter_client=TwitterClient('balaton sound')
+    # print(twitter_client.get_user_timeline_tweets(1))
     # twitter_streamer=TwitterStreamer()
     # twitter_streamer.stream_tweets(tweet_filename,hashtag_list)
