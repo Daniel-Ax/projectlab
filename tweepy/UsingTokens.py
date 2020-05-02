@@ -12,7 +12,6 @@ class TwitterClient():
     def __init__(self,twitter_user=None):
         self.auth=TwitterAuthenticator().authenticate_twitter_app()
         self.twitter_clent=API(self.auth)
-
         self.twitter_user=twitter_user
 
     def get_twitter_client_api(self):
@@ -80,9 +79,9 @@ class TweetAnalyzer():
 
         df['len'] = np.array([len(tweet.text) for tweet in tweets])
         df['id'] = np.array([tweet.id for tweet in tweets])
-        df['date'] = np.array([tweet.created_at for tweet in tweets])
-        df['likes'] = np.array([tweet.favorite_count for tweet in tweets])
-        df['retweet'] = np.array([tweet.retweet_count for tweet in tweets])
+        df['Date'] = np.array([tweet.created_at for tweet in tweets])
+        df['Likes'] = np.array([tweet.favorite_count for tweet in tweets])
+        df['Retweet'] = np.array([tweet.retweet_count for tweet in tweets])
         df['Device'] = np.array([tweet.source for tweet in tweets])
         return df
 
@@ -96,10 +95,12 @@ if __name__=='__main__':
 
     df=tweet_analyzer.tweets_to_dataframe(tweets)
 
-    print(df.head(10))
-    print(tweets[0].id)
-    print("Retweeted:",tweets[0].retweet_count,"times")
-    print(df.head(10))
+    # print(df.head(10))
+    # print(tweets[0].id)
+    # print("Retweeted:",tweets[0].retweet_count,"times")
+    # print(df.head(10))
+    json=df.to_html("index")
+    print(df)
     # hashtag_list=['donald trump','barack obama']
     # tweet_filename="tweets.json"
     #
