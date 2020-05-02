@@ -90,17 +90,23 @@ if __name__=='__main__':
     tweet_analyzer=TweetAnalyzer()
 
     api=twitter_client.get_twitter_client_api()
-    tweets=api.user_timeline(screen_name="realDonaldTrump",count=20)
+    tweets=api.user_timeline(screen_name="BarackObama",count=20)
     #print(dir(tweets[0]))
 
     df=tweet_analyzer.tweets_to_dataframe(tweets)
+
+    outFileName="C:\\xampp\\htdocs\\dashboard\\index.html"
 
     # print(df.head(10))
     # print(tweets[0].id)
     # print("Retweeted:",tweets[0].retweet_count,"times")
     # print(df.head(10))
-    html=df.to_html("index")
-    print(df)
+    df.to_html(buf='C:\\xampp\\htdocs\\index.html')
+    # outFile=open(outFileName,"wb")
+    # outFile.writelines(html)
+    # outFile.close()
+    # print(df)
+
     # hashtag_list=['donald trump','barack obama']
     # tweet_filename="tweets.json"
     #
