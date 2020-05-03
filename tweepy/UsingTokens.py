@@ -6,7 +6,7 @@ from tweepy import Stream
 import API_keys
 import numpy as np
 import pandas as pd
-
+import cgi
 
 class TwitterClient():
     def __init__(self,twitter_user=None):
@@ -89,21 +89,26 @@ if __name__=='__main__':
     twitter_client=TwitterClient()
     tweet_analyzer=TweetAnalyzer()
 
+    form = cgi.FieldStorage()
+    searchterm = form.getvalue('searchbox')
+    print(form)
     api=twitter_client.get_twitter_client_api()
-    tweets=api.user_timeline(screen_name="BarackObama",count=20)
-    #print(dir(tweets[0]))
+    if api.user_timeline(screen_name=None) and searchterm==None:
+        tweets=api.user_timeline(screen_name="BarackObama",count=20)
+        df = tweet_analyzer.tweets_to_dataframe(tweets)
+        df.to_html(buf='C:\\xampp\\htdocs\\index.html')
+    else:
+        tweets = api.user_timeline(screen_name=searchterm, count=20)
+        df = tweet_analyzer.tweets_to_dataframe(tweets)
+        df.to_html(buf='C:\\xampp\\htdocs\\index.html')
 
-    df=tweet_analyzer.tweets_to_dataframe(tweets)
+
 
     # print(df.head(10))
     # print(tweets[0].id)
     # print("Retweeted:",tweets[0].retweet_count,"times")
     # print(df.head(10))
-    df.to_html(buf='C:\\xampp\\htdocs\\index.html')
-    # outFile=open(outFileName,"wb")
-    # outFile.writelines(html)
-    # outFile.close()
-    # print(df)
+
 
     # hashtag_list=['donald trump','barack obama']
     # tweet_filename="tweets.json"
