@@ -17,13 +17,20 @@ def getCreds():
 
 def makeApiCalls(url,endpointPar,debug='no'):
     data=requests.get(url,endpointPar)
+    with open('test.txt','w') as wr:
+        wr.write(str(data)+'\n')
+        wr.write(str(data.content)+'\n')
 
     response=dict()
     response['url']=url
     response['enpoint_params']=endpointPar
     response['endpoint_params_pretty']=json.dumps(endpointPar,indent=4)
-    response['json_data']=json.loads(data.content)
+    response['json_data'] = json.loads(data.content)
     response['json_data_pretty'] = json.dumps(response['json_data'], indent=4)
+
+    with open('test.txt', 'a') as wr:
+        wr.write(str(response['json_data']))
+
 
     if('yes'==debug):
         displayApiData(response)
