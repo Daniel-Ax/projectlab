@@ -16,6 +16,7 @@ def getLongLivedAccess(params):
     endpointParams['fb_exchange_token'] = params['access_token']  # access token to get exchange for a long lived token
 
     url = params['endpoint_base'] + 'oauth/access_token'  # endpoint url
+
     return makeApiCalls(url, endpointParams, params['debug'])  # make the api call
 
 
