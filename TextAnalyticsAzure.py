@@ -10,5 +10,5 @@ def authenticate_client():
     return text_analytics_client
 
 client = authenticate_client()
-
+#s
 print(client)
