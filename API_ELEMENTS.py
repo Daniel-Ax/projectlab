@@ -1,2 +1,2 @@
-key = "b78ce3789bc84bd7adb9cc2a905f7614"
-endpoint = "https://projectlab.cognitiveservices.azure.com/"
+key = "da26c6d4d5924488bc3a9bac7fe67746"
+endpoint = "https://projectlabv2.cognitiveservices.azure.com/"
