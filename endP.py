@@ -1,1 +1,1 @@
-endpoint="https://translateprojectlab.cognitiveservices.azure.com/"
+endpoint='ENDPOINT'
