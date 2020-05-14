@@ -3,6 +3,10 @@ from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
 import API_ELEMENTS
 
+
+
+#documents = ["I had the best day of my life. I wish you were there with me."]
+documents=["에서 파티를 취소했다고요. 제가 이제 여기 이제 왕자가 형이라고 얘기를 할 겸 워낙 친해서 문자를 나누다가 너무 잘 하고 있으니까 제가 아휴 시간도 안 먹고 이러고 있는데 베이커가 나온다고 있기 때문에 오늘이 크리스마스거든요. 25일 맞아요."]
 def authenticate_client():
     ta_credential = AzureKeyCredential(API_ELEMENTS.key)
     text_analytics_client = TextAnalyticsClient(endpoint=API_ELEMENTS.endpoint, credential=ta_credential)
@@ -10,7 +14,7 @@ def authenticate_client():
 
 
 def sentiment_analysis(client):
-    documents = ["I had the best day of my life. I wish you were there with me."]
+
     response = client.analyze_sentiment(documents=documents)[0]
     print("Document Sentiment: {}".format(response.sentiment))
     print("Overall scores: positive={0:.2f}; neutral={1:.2f}; negative={2:.2f} \n".format(
@@ -30,7 +34,6 @@ def sentiment_analysis(client):
 
 def language_detection(client):
     try:
-        documents = ["저는 Miklós Horthy의 군인입니다"]
         response = client.detect_language(documents = documents, country_hint = 'us')[0]
         print("Language: ", response.primary_language.name)
 
