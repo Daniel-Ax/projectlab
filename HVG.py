@@ -12,15 +12,15 @@ fg=soup.find_all('article')
 
 for text in fg:
     text1=text.h1
-    text2=text.a.text
+    text2=text.a
+    text_final=soup.get_text()
     #text2=soup.get_text
     #print(text1)
-    #TODO: Linkeket is lementeni a csvbe.
-
     if text1==None:
         print("Something went wrong")
     else:
-        csv_file.write(str(text2))
+        print(text_final)
+        #csv_file.write(str(text_final))
         print("File has been written")
 
 

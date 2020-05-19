@@ -1,6 +1,8 @@
 import csv
 import pandas as pd
 import numpy as np
+
+
 f=open('hvg_scrape.csv')
 csv_f=csv.reader(f)
 news=[]
