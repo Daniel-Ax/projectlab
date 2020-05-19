@@ -7,6 +7,7 @@ import API_keys
 import numpy as np
 import pandas as pd
 import cgi
+import matp
 
 class TwitterClient():
     def __init__(self,twitter_user=None):
@@ -86,6 +87,7 @@ class TweetAnalyzer():
         return df
 
 if __name__=='__main__':
+
     twitter_client=TwitterClient()
     tweet_analyzer=TweetAnalyzer()
 
@@ -94,8 +96,9 @@ if __name__=='__main__':
     print(form)
     api=twitter_client.get_twitter_client_api()
     if api.user_timeline(screen_name=None) and searchterm==None:
-        tweets=api.user_timeline(screen_name="BarackObama",count=20)
+        tweets=api.user_timeline(screen_name="WHO",count=200)
         df = tweet_analyzer.tweets_to_dataframe(tweets)
+        df.to_csv('userdata.csv')
         df.to_html(buf='C:\\xampp\\htdocs\\index.html')
     else:
         tweets = api.user_timeline(screen_name=searchterm, count=20)
@@ -103,6 +106,9 @@ if __name__=='__main__':
         df.to_html(buf='C:\\xampp\\htdocs\\index.html')
 
 
+
+    time_likes=pd.Series(data=df['likes'].values, index=df['data'])
+    time_likes.plot(figsize=(16,4),color='r')
 
     # print(df.head(10))
     # print(tweets[0].id)
