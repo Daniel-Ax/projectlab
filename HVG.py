@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import csv
 import requests
+import re
+import pandas as pd
 
 source=requests.get('http://www.hvg.hu/').text
 soup=BeautifulSoup(source,'lxml')
@@ -23,3 +25,13 @@ for text in fg:
 
 
 csv_file.close()
+
+# csv_final=open('pretty.csv','w')
+# df = pd.read_csv('hvg_scrape.csv')
+# pretty=df.to_csv('pretty.csv', index=False)
+# writer=csv.writer(pretty)
+#
+# for i in len(pretty):
+#     csv_final.write(str(pretty))
+#
+# csv_final.close()
