@@ -7,7 +7,7 @@ import API_keys
 import numpy as np
 import pandas as pd
 import cgi
-import matp
+import matplotlib.pyplot as plt
 
 class TwitterClient():
     def __init__(self,twitter_user=None):
@@ -96,7 +96,7 @@ if __name__=='__main__':
     print(form)
     api=twitter_client.get_twitter_client_api()
     if api.user_timeline(screen_name=None) and searchterm==None:
-        tweets=api.user_timeline(screen_name="WHO",count=200)
+        tweets=api.user_timeline(screen_name="BarackObama",count=200)
         df = tweet_analyzer.tweets_to_dataframe(tweets)
         df.to_csv('userdata.csv')
         df.to_html(buf='C:\\xampp\\htdocs\\index.html')
@@ -106,9 +106,19 @@ if __name__=='__main__':
         df.to_html(buf='C:\\xampp\\htdocs\\index.html')
 
 
-
-    time_likes=pd.Series(data=df['likes'].values, index=df['data'])
+    time_likes=pd.Series(data=df['Likes'].values, index=df['Date'])
     time_likes.plot(figsize=(16,4),color='r')
+    plt.show()
+
+
+    time_likes=pd.Series(data=df['Likes'].values, index=df['Date'])
+    time_likes.plot(figsize=(16,4),label='Likes', legend=True)
+
+    time_retweets=pd.Series(data=df['Retweet'].values, index=df['Date'])
+    time_retweets.plot(figsize=(16,4), label='Retweet', legend=True)
+    plt.show()
+
+
 
     # print(df.head(10))
     # print(tweets[0].id)
