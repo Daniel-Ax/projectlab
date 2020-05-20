@@ -106,18 +106,19 @@ if __name__=='__main__':
         df.to_html(buf='C:\\xampp\\htdocs\\index.html')
 
 
+
+    #Ez a plot megmutatja a likeok idöközönkénti megoszlásást
     time_likes=pd.Series(data=df['Likes'].values, index=df['Date'])
     time_likes.plot(figsize=(16,4),color='r')
     plt.show()
 
-
+    #Ez a plot megmutatja, hogy a likeok miként korrelálnak a retweetek számával
     time_likes=pd.Series(data=df['Likes'].values, index=df['Date'])
     time_likes.plot(figsize=(16,4),label='Likes', legend=True)
 
     time_retweets=pd.Series(data=df['Retweet'].values, index=df['Date'])
     time_retweets.plot(figsize=(16,4), label='Retweet', legend=True)
     plt.show()
-
 
 
     # print(df.head(10))
