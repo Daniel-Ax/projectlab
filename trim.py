@@ -1,19 +1,21 @@
 import csv
+import logging
 import pandas as pd
 import numpy as np
 
 
-f=open('hvg_scrape.csv')
-csv_f=csv.reader(f)
 news=[]
 news_clean1=[]
-for row in csv_f:
-    news.append(row)
-f.close()
+with open('text', 'r', newline='',encoding='utf-8') as file:
+    csv_f = csv.reader(file)
+    for row in csv_f:
+        print(row)
+        news.append(row)
+
+
 
 for i in news:
-    if i or any(row) or any(field.strip('\t') for field in row):
-        news_clean1.append(i)
+    print(i.strip())
 
-df = pd.DataFrame(data=news_clean1, dtype=np.int8)
-data = pd.read_csv("hvg_scrape.csv")
+# df = pd.DataFrame(data=news_clean1, dtype=np.int8)
+# data = pd.read_csv("hvg_scrape.csv")
